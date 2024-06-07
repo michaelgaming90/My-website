@@ -1,0 +1,111 @@
+#Div{
+    margin: 5px;
+    margin-top: 0px;
+    text-align: center;
+    align-items: center;
+    background-color: aqua;
+    height: 100%;
+    width: auto;
+    padding-bottom: 20px;
+
+}
+
+.Dices{
+    margin: 10px;
+    height: 115px;
+    width: 115px;
+    border-radius: 25px;
+    border-width: 5px;
+    border-color: black;
+    border-style: solid;
+    position: absolute;;
+
+    animation-name: slideUp;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-play-state: running;
+    animation-direction: linear;
+}
+
+.Toggle_Buttons{
+    margin: 10px;
+    margin-top: 25px;
+    color:white;
+    height: 50px;
+    padding: 10px 25px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 5px 5px 5px black;
+    cursor: pointer;
+}
+
+#My_Button{
+    background-color: hsla(240, 94%, 58%, 0.813);
+}
+
+#Start{
+    background-color: hsl(243, 63%, 43%);
+}
+
+#Start:hover{
+    background-color: hsl(243, 63%, 33%);
+}
+
+#Stop{
+    background-color: hsl(0, 91%, 59%);
+}
+
+#Stop:hover{
+    background-color: hsl(0, 91%, 49%);
+}
+
+#Random_Title{
+    text-align: center;
+    display: block;
+    padding: -12px 124px;
+    margin: 5px;
+    margin-bottom: 1px;
+    background-color: rgb(0, 255, 0);
+}
+
+.Dice_Counters{
+    background-color: white;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 5px;
+    padding: 1px 46px;
+    margin: 15px;
+    font-size: x-large;
+}
+
+body{
+    background-color: rgba(169, 168, 168, 0.279);
+    text-align: center;
+    justify-content: center;
+}
+
+#Number_Dice{
+    font-size: 2em;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: hsla(0, 0%, 87%, 0.783);
+    margin-top: 10px;
+}
+
+#Number_Input{
+    text-align: center;
+    border-radius: 10px;
+    width: 45px;
+    font-size: 2em;
+    margin: 10px;
+}
+
+#Dice_Container
+{
+    overflow: hidden;
+}
+
+@keyframes slideUp{
+    from{ transform: translateY(200%);}
+    to{ transform: translateY(-200%);}
+}
