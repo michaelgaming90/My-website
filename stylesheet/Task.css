@@ -14,6 +14,13 @@ body{
     color: white;
 }
 
+@media(max-width: 768px)
+{
+    body{
+        font-size: 14px;
+    }
+}
+
 #Challenge input{
     transform: scale(2);
     margin: 10px 10px;
@@ -23,12 +30,13 @@ body{
 
 #My_Div{
     margin-left: 10px;
-    font-size: 1.5em;
+    font-size: 0.875rem;
+    width: 80%;
 }
 
 #Task{
     text-align: center;
-    font-size: 2.5em;
+    font-size: 2.5rem;
     background-color: chartreuse;
     margin: 10px;
     margin-bottom: 0px;
@@ -37,7 +45,7 @@ body{
     font-weight: bold;
 }
 .Timers{
-    font-size: 4em;
+    font-size: 4rem;
     text-align: center;
     font-weight: bold;
     background-color: hsla(0, 0%, 74%, 0.685);
