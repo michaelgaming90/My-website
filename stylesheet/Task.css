@@ -29,13 +29,12 @@ body{
 
 
 #My_Div{
-    margin-left: 10px;
     font-size: 0.875rem;
 }
 
 #Task{
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     background-color: chartreuse;
     margin: 10px;
     margin-bottom: 0px;
@@ -44,7 +43,7 @@ body{
     font-weight: bold;
 }
 .Timers{
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     text-align: center;
     font-weight: bold;
     background-color: hsla(0, 0%, 74%, 0.685);
