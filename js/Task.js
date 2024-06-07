@@ -134,7 +134,7 @@ function Challenge(Input){
             Assign_Element(Button, "id", "Start");
             Assign_Element(Button, "textContent", "Start");
             milliseconds = Temp[0].Timer + 1;
-            Update(Display);
+            Update(Display, Container);
             
             Button.addEventListener("click", () =>
             {
@@ -142,7 +142,7 @@ function Challenge(Input){
                 {
                     Update_Interval = setInterval(() =>
                     {
-                        Update(Display);
+                        Update(Display, Container);
                     }, 10);
                     Assign_Element(Button, "textContent", "Stop");
                     Button.style.backgroundColor = "red";
@@ -152,6 +152,8 @@ function Challenge(Input){
                     clearInterval(Update_Interval);
                     Assign_Element(Button, "textContent", "Start");
                     Button.style.backgroundColor = "cyan";
+                    let Audio = document.getElementById("Audio");
+                    Audio.pause();
                 }
             }
             )
@@ -264,11 +266,16 @@ function Answer(Pick, Picks, Task_Choice)
     }
 }
 
-function Update(Display)
+function Update(Display, Container)
 {
     if(milliseconds <= 0)
     {
         clearInterval(Update_Interval);
+        let audio = Add_Element("audio", Container, true);
+        audio.classList = "Audios";
+        audio.id = "Audio";
+        audio.src = "../audio/civil-defense-siren-128262.mp3";
+        audio.play();
     }
     else
     {
