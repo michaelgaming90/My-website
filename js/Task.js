@@ -143,7 +143,6 @@ function Challenge(Input){
             let Button = Build_Element("button", Container, true, "Start", "Start", null, null, null);
             
             milliseconds = Temp[0].Timer + 1;
-            milliseconds = 2;
             Update(Display, Container);
             
             Button.addEventListener("click", () =>
