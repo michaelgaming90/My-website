@@ -1,4 +1,4 @@
-h1{
+#Head{
     border: 2px solid;
     text-align: center;
     font-size: 4em;
@@ -14,7 +14,7 @@ body{
     color: white;
 }
 
-@media(max-width: 768px)
+@media(max-width: 221px)
 {
     body{
         font-size: 14px;
@@ -29,12 +29,13 @@ body{
 
 
 #My_Div{
+    margin-left: 10px;
     font-size: 0.875rem;
 }
 
 #Task{
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     background-color: chartreuse;
     margin: 10px;
     margin-bottom: 0px;
@@ -43,7 +44,7 @@ body{
     font-weight: bold;
 }
 .Timers{
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     text-align: center;
     font-weight: bold;
     background-color: hsla(0, 0%, 74%, 0.685);
@@ -77,13 +78,31 @@ body{
     text-align: center;
 }
 
-
 #Choices_Form input{
     transform: scale(2);
     margin: 10px 10px;
     cursor: pointer;
 }
 
+#Stats_Div{
+    margin: 5px;
+    margin-left: 10px;
+}
+
+#Score_Div{
+    position: absolute;
+    text-align: center;
+    margin-top: 20px;
+    width: 40%;
+    top: 1%;
+    right: 2%;
+    border-radius: 10px;
+    background-color: orange;
+}
+
+#Score_Div h2{
+    margin: 0;
+}
 @keyframes Slide_Down{
     from{transform: translateY(-100px);}
 }
