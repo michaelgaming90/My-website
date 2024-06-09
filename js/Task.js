@@ -33,9 +33,15 @@ function Initialize()
     if(Datas[0].Day_Registered === 0)
     {
         Datas[0].Day_Registered = new Date("Wed Feb 28 2024 08:00:00 GMT+0800 (Philippine Standard Time)");
-        let string = JSON.stringify(Datas);
-        localStorage.setItem("Data", string);
     }
+
+    if(Datas[0].Active_Task === null)
+    {
+        Datas[0].Active_Task = false;
+    }
+
+    let string = JSON.stringify(Datas);
+    localStorage.setItem("Data", string);
 }
 
 async function Start()
@@ -81,7 +87,7 @@ function Challenge(Input){
     {
         if(Input.checked)
         {
-            let form = Build_Element("form", Div, true, "New_Task", "Temp_Form", null, null, null);
+            let form = Build_Element("form", Div, true, "New_Task", "Temp_Form", null, null, "Forms");
     
             let New_Checkboxs = [
                 Add_Element("input", form, true),
@@ -112,8 +118,16 @@ function Challenge(Input){
         }
         else
         {
-            let form = document.getElementById("Temp_Form");
-            Remove(form, Div, true);
+            try
+            {
+                let Forms = document.querySelectorAll(".Forms");
+                Forms.forEach(Form =>{
+                    Remove(Form, Div, true);
+                }
+                )
+            }
+            catch(error)
+            {}
         }
     }
     else if(Input.id === "Display")
@@ -129,6 +143,7 @@ function Challenge(Input){
             let Button = Build_Element("button", Container, true, "Start", "Start", null, null, null);
             
             milliseconds = Temp[0].Timer + 1;
+            milliseconds = 2;
             Update(Display, Container);
             
             Button.addEventListener("click", () =>
@@ -142,18 +157,19 @@ function Challenge(Input){
                     if(milliseconds > 0)
                     {
                         Assign_Element(Button, "textContent", "Stop");
-                    Button.style.backgroundColor = "red";
+                        Button.style.backgroundColor = "red";
                     }
                 }
                 else
                 {
                     clearInterval(Update_Interval);
                     Assign_Element(Button, "textContent", "Start");
+                    
                     Button.style.backgroundColor = "cyan";
                     let Audio = document.getElementById("Audio");
                     if(Audio !== null)
                     {
-                        Audio.pause();
+                        Remove(Audio, Container, false);
                     }     
                 }
             }
@@ -190,7 +206,7 @@ function Choices(Task_Choice, Task_Choices)
                 }
             }
         )
-        let Choices_Form = Build_Element("form", Div, true, "Choices", `Choices_Form`, null, null, null);
+        let Choices_Form = Build_Element("form", Div, true, "Choices", `Choices_Form`, null, null, "Forms");
         Build_Element("p", Choices_Form, false, `Are you Ready for Task: ${Task_Choice.id}`, null, null, null, null);
         
         let Inputs = [
@@ -238,14 +254,15 @@ function Answer(Pick, Picks, Task_Choice)
         if(Pick.id === "Yes")
         {
             Random_Num = Math.floor(Math.random() * 30 +1);
-            Build_Element("p", Div, true, `You have to do ${Task_Choice.id} for ${Random_Num} minutes`, "P", null, null, null);
+            Build_Element("p", Div, true, `You have to do ${Task_Choice.id} for ${Random_Num} minutes`, "P", null, null, "Forms");
 
             Save(0, "Timer", Random_Num*60*100);
             Save(0, "Current_Task", Task_Choice.id);
+            Save(0, "Active_Task", true);
         }
         else if(Pick.id === "No")
         {
-            Build_Element("p", Div, true, "Come Back When You're Ready", "P", null, null, null);
+            Build_Element("p", Div, true, "Come Back When You're Ready", "P", null, null, "Forms");
         }
     }
     else
@@ -260,9 +277,11 @@ function Update(Display, Container)
     if(milliseconds <= 0)
     {
         clearInterval(Update_Interval);
-        
+
+        let Read = JSON.parse(localStorage.getItem("Data"));
+
         let Audio = document.getElementById("Audio");
-        if(Audio === null)
+        if(Audio === null && Read[0].Active_Task)
         {
             Save(0, "Score", 2);
 
@@ -272,6 +291,11 @@ function Update(Display, Container)
             audio.loop = true;
             audio.src = "../audio/civil-defense-siren-128262.mp3";
             audio.play();
+
+            let Task = document.getElementById("Task");
+            Assign_Element(Task, "textContent", "Finished")
+
+            Save(0, "Active_Task", false);
         }   
     }
     else
@@ -447,6 +471,10 @@ function Save(index, property, value)
         let Score = document.getElementById("Score");
         let Points = Saved[index].Score.toString().padStart(2, "0");
         Assign_Element(Score, "textContent", `${Points} points`);
+    }
+    else if(property === "Active_Task")
+    {
+        Saved[index].Active_Task = value;
     }
     
     let Str = JSON.stringify(Saved);
