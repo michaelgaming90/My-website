@@ -1,4 +1,5 @@
 const Div = document.getElementById("My_Div");
+const Stats = document.getElementById("Stats_Div");
 const Inputs = document.querySelectorAll("#My_Div input");
 
 let Random_Num = 0;
@@ -11,7 +12,7 @@ let Update_Interval;
 
 function Initialize()
 {
-    let Save_File = [
+    let Save_Files = [
         {
             Name: "Michael",
             Age: 17,
@@ -21,17 +22,27 @@ function Initialize()
             Day_Registered: 0,
         }
     ];
-    let str = JSON.stringify(Save_File);
+    let str = JSON.stringify(Save_Files);
 
     if(localStorage.getItem("Data") === null)
     {
         localStorage.setItem("Data", str);
+    }
+
+    let Datas = JSON.parse(localStorage.getItem("Data"));
+    if(Datas[0].Day_Registered === 0)
+    {
+        Datas[0].Day_Registered = new Date("Wed Feb 28 2024 08:00:00 GMT+0800 (Philippine Standard Time)");
+        let string = JSON.stringify(Datas);
+        localStorage.setItem("Data", string);
     }
 }
 
 async function Start()
 {  
     Initialize();
+    Day_Clock();
+    Score();
     Inputs.forEach(Input =>
     {
         Input.addEventListener("click", () =>
@@ -70,9 +81,7 @@ function Challenge(Input){
     {
         if(Input.checked)
         {
-            let form = Add_Element("form", Div, true);
-            Assign_Element(form, "textContent", "New_Task");
-            Assign_Element(form, "id", "Temp_Form");
+            let form = Build_Element("form", Div, true, "New_Task", "Temp_Form", null, null, null);
     
             let New_Checkboxs = [
                 Add_Element("input", form, true),
@@ -94,14 +103,9 @@ function Challenge(Input){
     
             let Text_Index = 0;
             New_Checkboxs.forEach(New_Checkbox => {
-    
-                Assign_Element(New_Checkbox, "type", "checkbox");
-                let Label = form.insertBefore(Add_Element("label", form, false), New_Checkbox.nextElementSibling);
+                Build_Element(New_Checkbox, null, null, null, Text_Contents[Text_Index], "checkbox", "Tasks", null);
+                let Label = form.insertBefore(Build_Element("label", form, false, Text_Contents[Text_Index], null, null, null, null), New_Checkbox.nextElementSibling);
                 Assign_Element(Label, "for", Text_Contents[Text_Index]);
-                Assign_Element(Label, "textContent", Text_Contents[Text_Index]);
-            
-                Assign_Element(New_Checkbox, "name", "Tasks");
-                Assign_Element(New_Checkbox, "id", Text_Contents[Text_Index]);
                 Text_Index++;
             }
             )
@@ -109,31 +113,23 @@ function Challenge(Input){
         else
         {
             let form = document.getElementById("Temp_Form");
-            Remove(form);
+            Remove(form, Div, true);
         }
     }
     else if(Input.id === "Display")
     {
         if(Input.checked)
         {
-            let Container = Add_Element("div", Div, true);
-            Assign_Element(Container, "id", "Container");
-
+            //Read
             let Temp = JSON.parse(localStorage.getItem("Data"));
 
-            let Task = Add_Element("p", Container, true);
-            Assign_Element(Task, "textContent", Temp[0].Current_Task);
-            Assign_Element(Task, "id", "Task");
-
-            let Display = Add_Element("p", Container, false);
-            Assign_Element(Display, "id", "Timer");
-            Assign_Element(Display, "textContent", "00:00:00");
-            Assign_Element(Display, "classList", "Timers");
-
-            let Button = Add_Element("button", Container, true);
-            Assign_Element(Button, "id", "Start");
-            Assign_Element(Button, "textContent", "Start");
-            milliseconds = Temp[0].Timer + 1;
+            let Container = Build_Element("div", Div, true, null, "Container", null, null, null);
+            Build_Element("p", Container, true, Temp[0].Current_Task, "Task", null, null, null);
+            let Display = Build_Element("p", Container, false, "00:00:00", "Timer", null, null, "Timers");
+            let Button = Build_Element("button", Container, true, "Start", "Start", null, null, null);
+            
+            //milliseconds = Temp[0].Timer + 1;
+            milliseconds = 1001;
             Update(Display, Container);
             
             Button.addEventListener("click", () =>
@@ -144,8 +140,11 @@ function Challenge(Input){
                     {
                         Update(Display, Container);
                     }, 10);
-                    Assign_Element(Button, "textContent", "Stop");
+                    if(milliseconds > 0)
+                    {
+                        Assign_Element(Button, "textContent", "Stop");
                     Button.style.backgroundColor = "red";
+                    }
                 }
                 else
                 {
@@ -153,7 +152,10 @@ function Challenge(Input){
                     Assign_Element(Button, "textContent", "Start");
                     Button.style.backgroundColor = "cyan";
                     let Audio = document.getElementById("Audio");
-                    Audio.pause();
+                    if(Audio !== null)
+                    {
+                        Audio.pause();
+                    }     
                 }
             }
             )
@@ -163,7 +165,7 @@ function Challenge(Input){
             clearInterval(Update_Interval);
 
             let Display = document.getElementById("Container");
-            Remove(Display);
+            Remove(Display, Div, true);
         }
     }
     else
@@ -183,19 +185,14 @@ function Choices(Task_Choice, Task_Choices)
                     if(Sample.checked) 
                     {
                         let Sample_Form = document.getElementById(`Choices_Form`);
-                        Remove(Sample_Form);
+                        Remove(Sample_Form, Div, true);
                         Sample.checked = false;
                     }
                 }
             }
         )
-
-        let Choices_Form = Add_Element("form", Div, true);
-        Assign_Element(Choices_Form, "textContent", "Choices");
-        Assign_Element(Choices_Form, "id", `Choices_Form`);
-        
-        let Paragraph = Add_Element("p", Choices_Form, false);
-        Assign_Element(Paragraph, "textContent", `Are you Ready for Task: ${Task_Choice.id}`)
+        let Choices_Form = Build_Element("form", Div, true, "Choices", `Choices_Form`, null, null, null);
+        Build_Element("p", Choices_Form, false, `Are you Ready for Task: ${Task_Choice.id}`, null, null, null, null);
         
         let Inputs = [
             Add_Element("input", Choices_Form, false),
@@ -207,12 +204,9 @@ function Choices(Task_Choice, Task_Choices)
 
         Inputs.forEach(Input =>
         {
-            Assign_Element(Input, "type", "checkbox");
-            Assign_Element(Input, "name", "Choices");
-            Assign_Element(Input, "id", Labels_Text[Labels_Index]);
-
-            let Label = Choices_Form.insertBefore(Add_Element("label", Choices_Form, false), Input.nextElementSibling);
-            Assign_Element(Label, "textContent", Labels_Text[Labels_Index]);
+            Build_Element(Input, Choices_Form, false, null, Labels_Text[Labels_Index], "checkbox", "Choices", null);
+            let Label = Choices_Form.insertBefore(Build_Element("label", Choices_Form, false, Labels_Text[Labels_Index], null, null, null, null), Input.nextElementSibling);
+            Assign_Element(Label, "for", Labels_Text[Labels_Index]);
             Labels_Index++;
         }
     )
@@ -220,7 +214,7 @@ function Choices(Task_Choice, Task_Choices)
     else
     {
         let Sample = document.getElementById(`Choices_Form`);
-        Remove(Sample);
+        Remove(Sample, Div, true);
     }
 }
 
@@ -235,7 +229,7 @@ function Answer(Pick, Picks, Task_Choice)
                     if(Sample.checked)
                     {
                         let Sample_Form = document.getElementById(`P`);
-                        Remove(Sample_Form);
+                        Remove(Sample_Form, Div, true);
                         Sample.checked = false;
                     } 
                 }
@@ -244,25 +238,21 @@ function Answer(Pick, Picks, Task_Choice)
 
         if(Pick.id === "Yes")
         {
-            let p = Add_Element("p", Div, false);
             Random_Num = Math.floor(Math.random() * 30 +1);
-            Assign_Element(p, "id", `P`);
-            Assign_Element(p, "textContent", `You have to do ${Task_Choice.id} for ${Random_Num} minutes`);
+            Build_Element("p", Div, true, `You have to do ${Task_Choice.id} for ${Random_Num} minutes`, "P", null, null, null);
 
             Save(0, "Timer", Random_Num*60*100);
             Save(0, "Current_Task", Task_Choice.id);
         }
         else if(Pick.id === "No")
         {
-            let p = Add_Element("p", Div, true);
-            Assign_Element(p, "id", `P`);
-            Assign_Element(p, "textContent", `Come Back When You're Ready`);
+            Build_Element("p", Div, true, "Come Back When You're Ready", "P", null, null, null);
         }
     }
     else
     {
         let p = document.getElementById(`P`);
-        Remove(p);
+        Remove(p, Div, true);
     }
 }
 
@@ -271,11 +261,19 @@ function Update(Display, Container)
     if(milliseconds <= 0)
     {
         clearInterval(Update_Interval);
-        let audio = Add_Element("audio", Container, true);
-        audio.classList = "Audios";
-        audio.id = "Audio";
-        audio.src = "../audio/civil-defense-siren-128262.mp3";
-        audio.play();
+        
+        let Audio = document.getElementById("Audio");
+        if(Audio === null)
+        {
+            Save(0, "Score", 2);
+
+            let audio = Add_Element("audio", Container, false);
+            audio.classList = "Audios";
+            audio.id = "Audio";
+            audio.loop = true;
+            audio.src = "../audio/civil-defense-siren-128262.mp3";
+            audio.play();
+        }   
     }
     else
     {
@@ -295,7 +293,73 @@ function Update(Display, Container)
     }
 }
 
+function Day_Clock()
+{
+    Build_Element("h1", Stats, false, "Time Spent", "Time Spent", null, null, null);
+    let Day_Counter = Build_Element("h2", Stats, false, "Day: 1", null, null, null, null);
+    let Day = Build_Element("h2", Stats, false, "00:00:00", null, null, null, null);
+    
+    setInterval(()=>
+    {
+        Day_Update(Day_Counter, Day)
+    }, 1000);
+}
+
+function Day_Update(Day_Counter, Day)
+{
+    let Read = JSON.parse(localStorage.getItem("Data"));
+
+    let Then = new Date(Read[0].Day_Registered);
+    Then.setHours(Then.getHours() - 8);
+
+    let Now = new Date();
+    let milliseconds = Now - Then;
+
+    let Seconds = Math.floor(milliseconds/1000) % 60;
+    let Minutes = Math.floor(milliseconds/(60*1000)) % 60;
+    let Hours = Math.floor(milliseconds/(60*60*1000));
+    let Days = Math.floor(milliseconds/(24*60*60*1000));
+
+    Seconds = Seconds.toString().padStart(2, "0");
+    Minutes = Minutes.toString().padStart(2, "0");
+    Hours = Hours.toString().padStart(2, "0");
+    Days = Days.toString().padStart(2, "0");
+
+    Assign_Element(Day_Counter, "textContent", `Day: #${Days}`);
+    Assign_Element(Day, "textContent", `${Hours}hours: ${Minutes}mins: ${Seconds}sec`);
+}
+
+function Score(){
+    let Read = JSON.parse(localStorage.getItem("Data"));
+
+    let Score = Read[0].Score.toString().padStart(2, "0");
+
+    let Score_Div = Build_Element("Div", Stats, false, null, "Score_Div", null, null, null);
+    Build_Element("h2",  Score_Div, false, `Todays Score:`, null, null, null, null);
+    Build_Element("h2",  Score_Div, false, `${Score} points`, "Score", null, null, null);
+}
+
 //function Tools
+function Build_Element(Type, Parent, bool, Text_Content, Id, Element_Type, Name, Class)
+{
+    let Element;
+    if(typeof Type === "string")
+    {
+        Element = Add_Element(Type, Parent, bool);
+    }
+    else{
+        Element = Type;
+    }
+    
+    Element.textContent = Text_Content;
+    Element.id = Id;
+    Element.type = Element_Type;
+    Element.name = Name;
+    Element.classList = Class;
+
+    return Element;
+}
+
 function Delay(ms)
 {
     return new Promise((resolve, reject) =>
@@ -354,13 +418,16 @@ function Assign_Element(Element, property, value){
     }
 }
 
-function Remove(Element)
+function Remove(Element, parent, bool)
 {
-    Div.removeChild(Element);
+    parent.removeChild(Element);
 
-    let brs = document.querySelectorAll(`#My_Div br`);
-    let br = brs[brs.length - 1];
-    Div.removeChild(br);
+    if(bool)
+    {
+        let brs = document.querySelectorAll(`#My_Div br`);
+        let br = brs[brs.length - 1];
+        Div.removeChild(br);
+    } 
 }
 
 function Save(index, property, value)
@@ -374,6 +441,13 @@ function Save(index, property, value)
     else if(property === "Timer")
     {   
         Saved[index].Timer = value;
+    }
+    else if(property === "Score")
+    {
+        Saved[index].Score += value;
+        let Score = document.getElementById("Score");
+        let Points = Saved[index].Score.toString().padStart(2, "0");
+        Assign_Element(Score, "textContent", `${Points} points`);
     }
     
     let Str = JSON.stringify(Saved);
