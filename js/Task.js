@@ -128,8 +128,7 @@ function Challenge(Input){
             let Display = Build_Element("p", Container, false, "00:00:00", "Timer", null, null, "Timers");
             let Button = Build_Element("button", Container, true, "Start", "Start", null, null, null);
             
-            //milliseconds = Temp[0].Timer + 1;
-            milliseconds = 1001;
+            milliseconds = Temp[0].Timer + 1;
             Update(Display, Container);
             
             Button.addEventListener("click", () =>
