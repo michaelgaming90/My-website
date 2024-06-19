@@ -499,7 +499,7 @@ function Answer(Pick, Picks, Task_Choice, Parent)
             let Random_Num = Math.floor(Math.random() * 30 +1);
             Build_Element("p", Parent, true, `You have to do ${Task_Choice.id} for ${Random_Num} minutes`, "P", null, null, "Forms");
 
-            Save(0, "Timer", Random_Num*60*100);
+            Save(0, "Timer", (Random_Num*60*100));
             Save(0, "Current_Task", Task_Choice.id);
             Save(0, "Active_Task", true);
         }
