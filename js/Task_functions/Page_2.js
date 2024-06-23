@@ -12,7 +12,6 @@ export function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id,
         let Audio = document.getElementById(`Audio_${Timer_Id}`);
         if(Audio === null && Read[0].Active_Task[Timer_Id])
         {
-            Speech_Function(Update_Interval, Timer_Id);
             Save(0, "Score", 2, Timer_Id);
 
             let audio = Add_Element("audio", Container, false);
@@ -25,6 +24,7 @@ export function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id,
             Assign_Element(Active_Tasks, "textContent", "Finished");
             Save(0, "Current_Task_2", "Finished", Timer_Id);
             Save(0, "Active_Task_2", false, Timer_Id);
+            Speech_Function(Timer_Id);
         }   
     }
     else
@@ -102,7 +102,7 @@ export function Lock()
     return Lock;
 }
 
-export function Speech_Function(Update_Interval, Timer_Id)
+export function Speech_Function(Timer_Id)
 {
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -130,7 +130,6 @@ export function Speech_Function(Update_Interval, Timer_Id)
             {
                 let Button = document.querySelectorAll(".Start_Buttons");
                 let Divs = document.querySelectorAll(".Grid_Items");
-                clearInterval(Update_Interval);
                 Assign_Element(Button[Timer_Id], "textContent", "Start");
                             
                 Button[Timer_Id].style.backgroundColor = "cyan";
