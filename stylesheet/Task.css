@@ -1,111 +1,52 @@
-#Head{
-    border: 2px solid;
-    text-align: center;
-    font-size: 4em;
-    background-color: hsl(117, 100%, 35%);
-    box-shadow: 1px 1px 5px;
-    animation-name: Slide_Down;
-    animation-play-state: running;
-    animation-duration: 1s;
-}
-
+/*Body*/
 body{
     background-color: hsla(0, 0%, 4%, 0.685);
     color: white;
+    margin: 10px;
 }
 
 hr{
     margin: 0px;
 }
 
-@media(max-width: 221px)
-{
-    body{
-        font-size: 14px;
-    }
-}
-
-#Challenge input{
-    transform: scale(2);
-    margin: 10px 10px;
-    cursor: pointer;
-}
-
-
-#My_Div{
-    margin-left: 10px;
-    font-size: 0.875rem;
-}
-
-#Task{
-    text-align: center;
-    font-size: 1.5rem;
-    background-color: chartreuse;
-    margin: 10px;
-    margin-bottom: 0px;
-    border-radius: 10px 10px 0 0;
-    padding: 10px 20px;
-    font-weight: bold;
-}
-.Timers{
-    font-size: 2.5rem;
-    text-align: center;
-    font-weight: bold;
-    background-color: hsla(0, 0%, 74%, 0.685);
-    border-radius: 0 0 10px 10px;
-    margin: 10px;
-    margin-top: 0px;
-}
-
-#Start{
-    text-align: center;
-    font-size: 1.5em;
-    background-color: cyan;
-    border: none;
-    color: white;
-    border-radius: 30px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-#Start:hover{
-    background-color: hsl(180, 100%, 40%);
-}
-
-#Temp_Form input{
-    transform: scale(2);
-    margin: 10px 10px;
-    cursor: pointer;
-}
-
-#Container{
-    text-align: center;
-}
-
-#Choices_Form input{
-    transform: scale(2);
-    margin: 10px 10px;
-    cursor: pointer;
-}
-
+/*All Page*/
 #Stats_Div{
     margin: 5px;
     margin-left: 10px;
 }
 
 #Score_Div{
-    position: absolute;
     text-align: center;
-    margin-top: 20px;
-    width: 40%;
-    top: 1%;
-    right: 2%;
     border-radius: 10px;
     background-color: orange;
+    
+}
+
+#Score_Div.Top_Right{
+    position: absolute;
+    font-size: .85em;
+    padding: 10px;
+    top: 6%;
+    right: 2%;
+}
+
+#Score_Div.Bottom{
+    display: block;
 }
 
 #Score_Div h2{
     margin: 0;
+}
+
+/*Menu*/
+#Menu{
+    position: absolute;
+    height: 90%;
+    width: 70%;
+    text-align: center;
+    top: 0%;
+    left: 0%;
+    background-color: chartreuse;
 }
 
 .Menu_Buttons{
@@ -114,17 +55,6 @@ hr{
     margin-left: 5px;
     width: fit-content;
     cursor: pointer;
-}
-
-#Menu{
-    position: absolute;
-    height: 90%;
-    width: 75%;
-    text-align: center;
-    margin-top: 10px;
-    top: 1%;
-    left: 0%;
-    background-color: chartreuse;
 }
 
 #Menu_Text{
@@ -146,6 +76,41 @@ hr{
     cursor: pointer;
 }
 
+/*Page 1*/
+#My_Div{
+    font-size: 0.875rem;
+}
+
+#New_Task{
+    border: 2px solid;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 3.5em;
+    background-color: hsl(117, 100%, 35%);
+    box-shadow: 1px 1px 5px;
+    animation-name: Slide_Down;
+    animation-play-state: running;
+    animation-duration: 1s;
+}
+
+#My_Div form input{
+    transform: scale(2);
+    margin: 10px 10px;
+    cursor: pointer;
+}
+
+/*Page 2*/
+#Lock{
+    color: chartreuse;
+    border-radius: 10px;
+    background-color: white;
+    padding: 4px;
+    border: none;
+    margin-bottom: 10px;
+    transition: color .5s linear;
+}
+
+
 #Active_Tasks_Selection{
     text-align: center;
     font-weight: bold;
@@ -154,12 +119,6 @@ hr{
     padding: 10px;
     margin-bottom: 0px;
     border-radius: 10px 10px 0 0;
-}
-
-.Active_Tasks{
-    font-size: 1.5em;
-    background-color: lime;
-    display: block;
 }
 
 #Grid{
@@ -173,12 +132,27 @@ hr{
 
 .Grid_Items{
     text-align: center;
-    align-items: center;
     font-size: 1.25em;
     background-color: hsla(0, 0%, 52%, 0.685);
     overflow: hidden;
     color: white;
     border-radius: 5px;
+}
+
+.Active_Tasks{
+    font-size: 1.5em;
+    background-color: lime;
+    display: block;
+}
+
+.Timers{
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    background-color: hsla(0, 0%, 74%, 0.685);
+    border-radius: 0 0 10px 10px;
+    margin: 10px;
+    margin-top: 0px;
 }
 
 .Start_Buttons{
@@ -188,8 +162,63 @@ hr{
     margin-bottom: 5px;
     background-color: cyan;
     cursor: pointer;
+    transition: color .5s linear;
 }
 
+/*Last Page*/
+#QR_Div{
+    display: flex;
+    flex-direction: column;
+    max-height: 140px;
+    text-align: left;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+    background-color: chartreuse;
+    border-radius: 15px;
+    transition: max-height 0.5s ease-in-out;
+}
+
+#QR_Div input{
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    padding: 10px 0;
+}
+
+#QR_Div label{
+    margin-top: 10px;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#QR_Div hr{
+    padding: 1px 500px;
+    background-color: white;
+    border: none;
+    color: white;
+}
+#QR_Div button{
+    padding: 5px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+}
+
+#QR_Div img{
+    display: block;
+    opacity: 0;
+    padding: 20px;
+    border-radius: 10px;
+    height: 100px;
+    margin: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: opacity 1s ease-in-out;
+}
+
+/*Animation Class*/
 .Animate_Left{
     animation-name: Slide_Left;
     animation-duration: 1s;
@@ -203,8 +232,7 @@ hr{
     animation-timing-function: ease-out;
 }
 
-
-
+/*Animations*/
 @keyframes Slide_Left{
     from{transform: translateX(-100%);}
 }
