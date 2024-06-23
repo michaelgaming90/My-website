@@ -24,6 +24,7 @@ export function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id,
             Assign_Element(Active_Tasks, "textContent", "Finished");
             Save(0, "Current_Task_2", "Finished", Timer_Id);
             Save(0, "Active_Task_2", false, Timer_Id);
+            await Delay(10000);
             Speech_Function(Timer_Id);
         }   
     }
