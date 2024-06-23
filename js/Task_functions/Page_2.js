@@ -1,6 +1,6 @@
 import {Build_Element, Delay, Add_Element, Get_Element, Check, Assign_Element, Remove, Save} from "./Function_Tools.js";
 
-export async function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id, Update_Interval)
+export function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id, Update_Interval)
 {
     if(milliseconds <= 0)
     {
@@ -12,20 +12,19 @@ export async function Update(Display, Container, Active_Tasks, milliseconds, Tim
         let Audio = document.getElementById(`Audio_${Timer_Id}`);
         if(Audio === null && Read[0].Active_Task[Timer_Id])
         {
+            Speech_Function(Timer_Id);
             Save(0, "Score", 2, Timer_Id);
 
             let audio = Add_Element("audio", Container, false);
             audio.classList = "Audios";
             audio.id = `Audio_${Timer_Id}`;
             audio.loop = true;
-            audio.src = "../../audio/civil-defense-siren-128262.mp3";
+            audio.src = "../audio/civil-defense-siren-128262.mp3";
             audio.play();
 
             Assign_Element(Active_Tasks, "textContent", "Finished");
             Save(0, "Current_Task_2", "Finished", Timer_Id);
             Save(0, "Active_Task_2", false, Timer_Id);
-            await Delay(10000);
-            Speech_Function(Timer_Id);
         }   
     }
     else
