@@ -1,6 +1,6 @@
 import {Build_Element, Delay, Add_Element, Get_Element, Check, Assign_Element, Remove, Save} from "./Function_Tools.js";
 
-export function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id, Update_Interval)
+export async function Update(Display, Container, Active_Tasks, milliseconds, Timer_Id, Update_Interval)
 {
     if(milliseconds <= 0)
     {
