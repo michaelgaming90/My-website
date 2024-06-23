@@ -22,7 +22,7 @@ function Pages()
 
     let Pages = [New_Task, Active_Tasks, Qr_Code_Generator];
     //default Page
-    Pages[1]();
+    Pages[0]();
     
 }
 let Page_Ids = [];
